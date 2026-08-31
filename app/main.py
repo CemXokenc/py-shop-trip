@@ -1,6 +1,3 @@
-from app import customer
-from app.car import Car
-
 from app.initialisation import initialisation
 
 
