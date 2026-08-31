@@ -1,37 +1,12 @@
-import json
-import math
-import os
 import datetime
 
 from app.car import Car
-from app.customer import Customer
-from app.shop import Shop
+
+from app.initialisation import initialisation
 
 
 def shop_trip() -> None:
-    config_path = os.path.join(os.path.dirname(__file__), "config.json")
-    with open(config_path) as f:
-        data = json.load(f)
-
-    fuel_price = data["FUEL_PRICE"]
-    customers = [
-        Customer(
-            customer["name"],
-            customer["product_cart"],
-            customer["location"],
-            customer["money"],
-            Car(customer["car"]["brand"], customer["car"]["fuel_consumption"])
-        )
-        for customer in data["customers"]
-    ]
-    shops = [
-        Shop(
-            shop["name"],
-            shop["location"],
-            shop["products"]
-        )
-        for shop in data["shops"]
-    ]
+    fuel_price, customers, shops = initialisation("config.json")
 
     for customer in customers:
         print(f"{customer.name} has {customer.money} dollars")
@@ -66,7 +41,7 @@ def shop_trip() -> None:
             print(f"Thanks, {customer.name}, for your purchase!")
             print("You have bought:")
 
-            customer.money -= best_price
+            customer.pay(best_price)
             total_products_cost = 0
             selected_shop = next(
                 shop
@@ -89,8 +64,7 @@ def shop_trip() -> None:
             print(f"{customer.name} rides home")
             print(f"{customer.name} now has {customer.money} dollars\n")
         else:
-            print(f"{customer.name} doesn't have enough "
-                  f"money to make a purchase in any shop")
+            print(customer.not_enough_money())
 
 
 if __name__ == "__main__":

@@ -15,3 +15,13 @@ class Customer:
         self.location = location
         self.money = money
         self.car = car
+
+    def pay(self, amount: int) -> None:
+        self.money -= amount
+
+    def enough_money(self):
+        pass
+
+    def not_enough_money(self):
+        return (f"{self.name} doesn't have enough "
+                f"money to make a purchase in any shop")
