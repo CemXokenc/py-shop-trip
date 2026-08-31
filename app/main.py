@@ -34,15 +34,18 @@ def shop_trip() -> None:
     ]
 
     for customer in customers:
-
         print(f"{customer.name} has {customer.money} dollars")
         price = {}
 
         for shop in shops:
-            distance = math.dist(customer.location, shop.location)
-
-            cost_transport = 2 * (distance * customer.car.fuel_consumption
-                                  / 100 * fuel_price)
+            cost_transport = Car.calculate_fuel_cost(
+                [
+                    customer.location,
+                    shop.location
+                ],
+                customer.car.fuel_consumption,
+                fuel_price
+            )
             cost_products = sum(
                 amount
                 * shop.products[product]
