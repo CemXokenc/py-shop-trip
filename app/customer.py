@@ -42,14 +42,17 @@ class Customer:
             )
             cost_products = shop.cost_products(self)
 
-            price[shop.name] = round(cost_transport + cost_products, 2)
+            price[shop] = round(cost_transport + cost_products, 2)
             print(f"{self.name}'s trip to the "
-                  f"{shop.name} costs {price[shop.name]}")
+                  f"{shop.name} costs {price[shop]}")
 
-        return price
+        best_shop = min(price, key=price.get)
+        best_price = price[best_shop]
 
-    def buy(self, best_shop, best_price, shops) -> None:
-        print(f"{self.name} rides to {best_shop}\n")
+        return best_shop, best_price
+
+    def buy(self, best_shop, best_price) -> None:
+        print(f"{self.name} rides to {best_shop.name}\n")
         print(f"Date: "
               f"{datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
         print(f"Thanks, {self.name}, for your purchase!")
@@ -57,14 +60,9 @@ class Customer:
 
         self.pay(best_price)
         total_products_cost = 0
-        selected_shop = next(
-            shop
-            for shop in shops
-            if shop.name == best_shop
-        )
 
         for product, amount in self.product_cart.items():
-            item_cost = amount * selected_shop.products[product]
+            item_cost = amount * best_shop.products[product]
             total_products_cost += item_cost
             item_cost_formatted = (
                 int(item_cost)

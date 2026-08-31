@@ -5,13 +5,10 @@ def shop_trip() -> None:
     fuel_price, customers, shops = initialisation("config.json")
 
     for customer in customers:
-        price = customer.choose_shop(shops, fuel_price)
-
-        best_shop = min(price, key=price.get)
-        best_price = price[best_shop]
+        best_shop, best_price = customer.choose_shop(shops, fuel_price)
 
         if customer.enough_money(best_price):
-            customer.buy(best_shop, best_price, shops)
+            customer.buy(best_shop, best_price)
         else:
             customer.not_enough_money()
 
