@@ -8,3 +8,10 @@ class Shop:
         self.name = name
         self.location = location
         self.products = products
+
+    def cost_products(self, customer):
+        return sum(
+            amount
+            * self.products[product]
+            for product, amount in customer.product_cart.items()
+        )

@@ -8,26 +8,7 @@ def shop_trip() -> None:
     fuel_price, customers, shops = initialisation("config.json")
 
     for customer in customers:
-        print(f"{customer.name} has {customer.money} dollars")
-        price = {}
-
-        for shop in shops:
-            cost_transport = customer.car.calculate_fuel_cost(
-                [
-                    customer.location,
-                    shop.location
-                ],
-                fuel_price
-            )
-            cost_products = sum(
-                amount
-                * shop.products[product]
-                for product, amount in customer.product_cart.items()
-            )
-
-            price[shop.name] = round(cost_transport + cost_products, 2)
-            print(f"{customer.name}'s trip to the "
-                  f"{shop.name} costs {price[shop.name]}")
+        price = customer.choose_shop(shops, fuel_price)
 
         best_shop = min(price, key=price.get)
         best_price = price[best_shop]

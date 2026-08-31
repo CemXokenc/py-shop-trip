@@ -28,6 +28,26 @@ class Customer:
         print(f"{self.name} doesn't have enough "
               f"money to make a purchase in any shop")
 
+    def choose_shop(self, shops, fuel_price):
+        print(f"{self.name} has {self.money} dollars")
+        price = {}
+
+        for shop in shops:
+            cost_transport = self.car.calculate_fuel_cost(
+                [
+                    self.location,
+                    shop.location
+                ],
+                fuel_price
+            )
+            cost_products = shop.cost_products(self)
+
+            price[shop.name] = round(cost_transport + cost_products, 2)
+            print(f"{self.name}'s trip to the "
+                  f"{shop.name} costs {price[shop.name]}")
+
+        return price
+
     def buy(self, best_shop, best_price, shops) -> None:
         print(f"{self.name} rides to {best_shop}\n")
         print(f"Date: "
