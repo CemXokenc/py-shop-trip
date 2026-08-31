@@ -1,4 +1,5 @@
 import datetime
+from typing import Any
 
 from app.car import Car
 
@@ -24,11 +25,11 @@ class Customer:
     def enough_money(self, amount: int) -> bool:
         return self.money >= amount
 
-    def not_enough_money(self):
+    def not_enough_money(self) -> None:
         print(f"{self.name} doesn't have enough "
               f"money to make a purchase in any shop")
 
-    def choose_shop(self, shops, fuel_price):
+    def choose_shop(self, shops: list, fuel_price: float | int) -> Any:
         print(f"{self.name} has {self.money} dollars")
         price = {}
 
@@ -51,7 +52,7 @@ class Customer:
 
         return best_shop, best_price
 
-    def buy(self, best_shop, best_price) -> None:
+    def buy(self, best_shop: object, best_price: float | int) -> None:
         print(f"{self.name} rides to {best_shop.name}\n")
         print(f"Date: "
               f"{datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")

@@ -1,12 +1,13 @@
 import json
 import os
+from typing import Any
 
 from app.car import Car
 from app.customer import Customer
 from app.shop import Shop
 
 
-def initialisation(filename):
+def initialisation(filename: str) -> Any:
     config_path = os.path.join(os.path.dirname(__file__), filename)
     with open(config_path) as f:
         data = json.load(f)

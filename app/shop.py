@@ -1,3 +1,6 @@
+from app.customer import Customer
+
+
 class Shop:
     def __init__(
             self,
@@ -9,7 +12,7 @@ class Shop:
         self.location = location
         self.products = products
 
-    def cost_products(self, customer):
+    def cost_products(self, customer: Customer) -> int | float:
         return sum(
             amount
             * self.products[product]
