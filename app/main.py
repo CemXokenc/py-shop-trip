@@ -34,37 +34,10 @@ def shop_trip() -> None:
         best_shop = min(price, key=price.get)
         best_price = price[best_shop]
 
-        if customer.money >= best_price:
-            print(f"{customer.name} rides to {best_shop}\n")
-            print(f"Date: "
-                  f"{datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
-            print(f"Thanks, {customer.name}, for your purchase!")
-            print("You have bought:")
-
-            customer.pay(best_price)
-            total_products_cost = 0
-            selected_shop = next(
-                shop
-                for shop in shops
-                if shop.name == best_shop
-            )
-
-            for product, amount in customer.product_cart.items():
-                item_cost = amount * selected_shop.products[product]
-                total_products_cost += item_cost
-                item_cost_formatted = (
-                    int(item_cost)
-                    if item_cost.is_integer()
-                    else item_cost
-                )
-                print(f"{amount} {product}s for {item_cost_formatted} dollars")
-
-            print(f"Total cost is {total_products_cost} dollars")
-            print("See you again!\n")
-            print(f"{customer.name} rides home")
-            print(f"{customer.name} now has {customer.money} dollars\n")
+        if customer.enough_money(best_price):
+            customer.buy(best_shop, best_price, shops)
         else:
-            print(customer.not_enough_money())
+            customer.not_enough_money()
 
 
 if __name__ == "__main__":

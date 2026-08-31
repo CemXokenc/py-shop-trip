@@ -1,3 +1,5 @@
+import datetime
+
 from app.car import Car
 
 
@@ -19,9 +21,39 @@ class Customer:
     def pay(self, amount: int) -> None:
         self.money -= amount
 
-    def enough_money(self):
-        pass
+    def enough_money(self, amount: int) -> bool:
+        return self.money >= amount
 
     def not_enough_money(self):
-        return (f"{self.name} doesn't have enough "
-                f"money to make a purchase in any shop")
+        print(f"{self.name} doesn't have enough "
+              f"money to make a purchase in any shop")
+
+    def buy(self, best_shop, best_price, shops) -> None:
+        print(f"{self.name} rides to {best_shop}\n")
+        print(f"Date: "
+              f"{datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
+        print(f"Thanks, {self.name}, for your purchase!")
+        print("You have bought:")
+
+        self.pay(best_price)
+        total_products_cost = 0
+        selected_shop = next(
+            shop
+            for shop in shops
+            if shop.name == best_shop
+        )
+
+        for product, amount in self.product_cart.items():
+            item_cost = amount * selected_shop.products[product]
+            total_products_cost += item_cost
+            item_cost_formatted = (
+                int(item_cost)
+                if item_cost.is_integer()
+                else item_cost
+            )
+            print(f"{amount} {product}s for {item_cost_formatted} dollars")
+
+        print(f"Total cost is {total_products_cost} dollars")
+        print("See you again!\n")
+        print(f"{self.name} rides home")
+        print(f"{self.name} now has {self.money} dollars\n")
