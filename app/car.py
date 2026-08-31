@@ -6,7 +6,6 @@ class Car:
         self.brand = brand
         self.fuel_consumption = fuel_consumption
 
-    @staticmethod
-    def calculate_fuel_cost(coordinates, fuel_consumption, fuel_price):
+    def calculate_fuel_cost(self, coordinates, fuel_price):
         distance = math.dist(coordinates[0], coordinates[1])
-        return 2 * distance * fuel_consumption / 100 * fuel_price
+        return 2 * distance * self.fuel_consumption / 100 * fuel_price

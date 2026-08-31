@@ -1,5 +1,4 @@
-import datetime
-
+from app import customer
 from app.car import Car
 
 from app.initialisation import initialisation
@@ -13,12 +12,11 @@ def shop_trip() -> None:
         price = {}
 
         for shop in shops:
-            cost_transport = Car.calculate_fuel_cost(
+            cost_transport = customer.car.calculate_fuel_cost(
                 [
                     customer.location,
                     shop.location
                 ],
-                customer.car.fuel_consumption,
                 fuel_price
             )
             cost_products = sum(
